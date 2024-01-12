@@ -1,0 +1,47 @@
+threshold = 10
+
+Scaffold    centiMorgan    Position
+Scaffold01     0.0           10
+Scaffold01     0.1           11 
+Scaffold01     0.5           19
+
+Scaffold02     1.5           30
+Scaffold02     1.6           40
+
+Scaffold02     2.9           51
+Scaffold02     3.0           52
+Scaffold03     3.8           53
+Scaffold04     4.6           54
+
+Scaffold05     5.0           89
+Scaffold05     5.1           90
+Scaffold05     5.5           91
+
+Scaffold05     5.9           600
+
+
+window 1 
+slope1 = 0.1
+slope2 = 0.05
+
+average: 0.75
+
+window 2: 
+slope1 = 0.01
+
+average = 0.01
+
+window 3: 
+slope1 =  0.1
+slope2 = 0.79
+slope3 = 0.79
+
+average = 0.56
+
+window 4:
+slope1 = 0.09
+slope2 = 0.4
+
+average = 0.25
+
+window 5: NaN 
