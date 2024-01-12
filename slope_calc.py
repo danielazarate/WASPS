@@ -53,7 +53,6 @@ def calculate_slope(window):
 # Same as calculate_slope except it only prints out one value per window.
 
 def single_slope(window):
-    A
     group = list(window)
     if len(group) == 1:
         return [None]
@@ -75,18 +74,18 @@ def calculate_midpoint(window):
 # Function pickfirst:
 # Picks the first element from a tuple. 
 
-def pickfirst(tup):
+def pick_position(tup):
     return tup[1]
 
 # Function calculate_mean:
-# Calculates mean of position values for a window.
+# Calculates mean from the position values of the window
 
 def calculate_mean(window):
     group = list(window)
     if len(group) == 1:
         return [None]
     else:
-        first = list(map(pickfirst, group))
+        first = list(map(pick_position, group))
         return [np.mean(first)]
 
 
