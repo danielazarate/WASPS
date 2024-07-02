@@ -36,102 +36,71 @@ __.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__
 __.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__. 
 
 
-# Input = in.conf
+# Input = vespula.conf
 
 ##################################### global parameters ###########################################
 
+###  # Detailed parameters please see  at the  NGenomeSyn_manual_English.pdf 
+
 SetParaFor = global
+########## global and required parameters ######
+GenomeInfoFile1=./v.con.len ### set path for Genome1, GenomeInfoFileX, X is the number of Genome
+GenomeInfoFile2=./vpen.ref.len ### set path for Genome2, Format(chr start End ...)
+GenomeInfoFile3=./v.vid.len
+LinkFileRef1VsRef2=./vcon_vpen.link ### link information between Genome1 and Genome2
+                                    ### LinkFileRefXXVsRefYY : link info between GenomeXX and GenomeYY
+                                    ### Format (chrA StartA EndA chrB StartB EndB ...
+LinkFileRef2VsRef3=./vvid_vpen.link
 
-GenomeInfoFile1=v.pen.len ## V.pen.linkage.map.len
-GenomeInfoFile2=v.con.len  ## V.con.linkage.map.len
-GenomeInfoFile3=v.vid.len ## V.vid.linkage.map.len
+############ canvas and figure[optional] ######
+#body=1200                 ### size of canvas with width and height. plot region:  (up/down/left/right)=(55,25,100,120)
+#up=55
+#down=25
+#left=100
+#right=120
+#CanvasHeightRitao=1.0     ## adjust height of the plot
+#CanvasWidthRitao=1.0      ## adjust width of the plot
+#NoPng=1                   ## No OutPut the png File
 
-LinkFileRef2VsRef1 =               # link file between V.pen vs V. con
-LinkFileRef2VsRef3 =               # link file between V. pen vs V.vid        
-LinkFileRef3VsRe1 =                # link file between V. con vs V. vid
 
-####### Format (chrA StartA EndA chrB StartB End ...other parameters)
-## Note: link files could be occurred multiple times
+############# adjust genome setting [optional]##########
+SetParaFor = Genome1       ## GenomeALL/GenomeX
+#ZoomChr=1.0               ## adjust chr length, 1 for equal; >1 for enlarge; <1  for
+#RotateChr=30              ## rotate the chr with 30 degrees
+#ShiftX=0
+#ShiftY=0                  ## move the start of chr to (X,Y)
+#MoveToX                   ## MoveToY   ## similar to ShiftX and ShiftY
 
 
-################################ Figure #########################################################
+#ChrWidth=20               ## chr width
+#LinkWidth=180             ## link height between this genome and next genome
+#ChrSpacing=10             ## spacing width of chr/scaffolds
+#NormalizedScale=0         ## custom scale for the geome relative the  default.
+#SpeRegionFile=Spe.bed     ## input file for highlighted regions[chr start end key1=value1] in the genome.
+#ZoomRegion                ## Zoom the specific Region,format (ZoomRegion=chr2:1000:5000)
 
-######## Dovetail-Genome1 ########
-SetParaFor = Genome1  ## GenomeALL/GenomeX
 
-ChrNameShow=0         ## show the chr name of this genomes
-GenomeName=Dovetail assembly
+#GenomeNameRatio
+#GenomeName
+## GenomeName  GenomeNameSizeRatio  GenomeNameColor  GenomeNameShiftX GenomeNameShiftY
+## ChrNameShow ChrNameShiftX ChrNameShiftY ChrNameSizeRatio ChrNameColor ChrNameRotate
+## ShowCoordinates=1     ## Show Coordinates with other para [ScaleNum=10 ScaleUpDown ScaleUnit LabelUnit  LablefontsizeRatio  RotateAxisText NoShowLabel ]
 
-######## fglacv1.1-Genome2 ########
-SetParaFor = Genome2  ## GenomeALL/GenomeX 
 
-ChrNameShow=0         ## show the chr name of this genomes    
-GenomeName=Rescaffolded
-SpeRegionFile=grey20_centromeres.bed      ## centromeres highlighted
-SpeRegionWidthRatio=1.25 ##
+SetParaFor = Genome2       ##
 
-######## lg-Genome3 ########
-SetParaFor = Genome3  ## GenomeALL/GenomeX 
-
-ChrNameShow=1         ## show the chr name of this genomes
-ChrNameColor=pink    ## chr name color to pink
-ChrNameShiftY=30
-GenomeName=Linkage Map
-
-############# adjust link setting##########
-SetParaFor=LinkALL           ### LinkALL/LinkX  setting for link X
-StyleUpDown=UpDown        ## UpDown DownUp UpUp DownDown line
-
+############# adjust link setting [optional]##########
+SetParaFor=Link1           ### LinkALL/LinkX  setting for link X
+#StyleUpDown=UpDown        ## UpDown DownUp UpUp DownDown line
+#Reverse=1                 ## reverse links
+#HeightRatio=1.0           ## ratio of link height relative to the default
+## other attributes:  fill|stroke|stroke-opacity|fill-opacity|stroke-width
 
 __.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__. 
 
 
 # Run NgenomeSyn:
-
-NGenomeSyn  -InConf  test.conf -OutPut test
+# NGenomeSyn  -InConf  test.conf -OutPut test
 
 # Just run one chr at a time 
-./NGenomeSyn-1.41/bin/NGenomeSyn -InConf  three.conf -OutPut test
-
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-Warning : at Link File ./vcon_vpen.link can't find the chr Scaffold25 at the  the 1 Genome File info
-
-
-__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__. 
-
-
-# Visualization:
-
-long_format <- function(x) {
-  # Create all combinations of colony, caste, haplotype
-  distinct_colony <- unique(x$colony)
-  distinct_caste <- unique(x$caste)
-  distinct_haplotype <- unique(x$haplotype)
- 
-  all_combinations <- expand.grid(colony = distinct_colony, caste = distinct_caste, haplotype = distinct_haplotype)
-  # Merge with the original data to obtain counts
-  merged_data <- all_combinations %>%
-  left_join(file, by = c("colony", "caste", "haplotype")) %>%
-  mutate(haplotype_count = ifelse(is.na(haplotype_count), 0, haplotype_count))
- 
- 
-  num_rows_merged <- nrow(merged_data)
- 
-  total_combinations <- length(distinct_colony) * length(distinct_caste) * length(distinct_haplotype)
- 
-  # Check if all combinations were made
-  if (num_rows_merged == total_combinations) {
-    print("All combinations were made successfully.")
-  } else {
-    print("Some combinations are missing.")
-  }
- 
-  print(merged_data)
-}
-
-__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__.__. 
-
+./NGenomeSyn-1.41/bin/NGenomeSyn -InConf  vespula.conf -OutPut vespula.out
