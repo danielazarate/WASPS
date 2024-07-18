@@ -1,7 +1,7 @@
 #!/bin/python
 
 # A script for calculating slope across variable windows.
-
+# 
 # functools.cmp_to_key : transform an old-style comparison function to a key function.
 # key function : a callable that returns a value used for sorting or ordering.
 # itertools.groupby() : Makes an iterator that returns consecutive keys and groups from the iterable, 
